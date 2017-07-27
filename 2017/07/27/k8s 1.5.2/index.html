@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://qhzxc0015.com">
   <title>Kubernetes 部署 | thk_days</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Kubernetes yum安装本部署方法通过yum来进行自动安装,k8s版本并不是最新版,此方法简单,高效,操作性强,非常好">
+  <meta name="description" content="本部署方法通过yum来进行自动安装,k8s版本并不是最新版,此方法简单,高效,操作性强,非常好">
 <meta name="keywords" content="技术">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Kubernetes 部署">
 <meta property="og:url" content="http://qhzxc0015.com/2017/07/27/k8s 1.5.2/index.html">
 <meta property="og:site_name" content="thk_days">
-<meta property="og:description" content="Kubernetes yum安装本部署方法通过yum来进行自动安装,k8s版本并不是最新版,此方法简单,高效,操作性强,非常好">
+<meta property="og:description" content="本部署方法通过yum来进行自动安装,k8s版本并不是最新版,此方法简单,高效,操作性强,非常好">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-07-27T07:24:37.023Z">
+<meta property="og:updated_time" content="2017-07-27T07:34:43.818Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kubernetes 部署">
-<meta name="twitter:description" content="Kubernetes yum安装本部署方法通过yum来进行自动安装,k8s版本并不是最新版,此方法简单,高效,操作性强,非常好">
+<meta name="twitter:description" content="本部署方法通过yum来进行自动安装,k8s版本并不是最新版,此方法简单,高效,操作性强,非常好">
   
     <link rel="alternative" href="/atom.xml" title="thk_days" type="application/atom+xml">
   
@@ -185,18 +185,48 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Kubernetes-yum安装"><a href="#Kubernetes-yum安装" class="headerlink" title="Kubernetes yum安装"></a>Kubernetes yum安装</h1><p>本部署方法通过yum来进行自动安装,k8s版本并不是最新版,此方法简单,高效,操作性强,非常好<a id="more"></a></p>
+        <p>本部署方法通过yum来进行自动安装,k8s版本并不是最新版,此方法简单,高效,操作性强,非常好<br><a id="more"></a></p>
+<blockquote>
 <p>本部署为1.5.2版本:<a href="http://blog.csdn.net/dream_broken/article/details/52954069" target="_blank" rel="external">部署参考</a>;可以根据具体需要进行版本升级:<a href="http://www.jianshu.com/p/41e55f4d0cb8" target="_blank" rel="external">升级参考</a></p>
-<p>##1. 前期工作</p>
+</blockquote>
+<h2 id="1-前期工作"><a href="#1-前期工作" class="headerlink" title="1. 前期工作"></a>1. 前期工作</h2><ul>
+<li>安装环境</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>IP</th>
+<th>NAME</th>
+<th>组件</th>
+<th>OS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>202.193.74.179</td>
+<td>Master</td>
+<td>kube-apiserver,kube-scheduler,kube-controller-manager,etcd</td>
+<td>Centos 7.2</td>
+</tr>
+<tr>
+<td>202.193.75.34</td>
+<td>Node</td>
+<td>kube-proxy kubelet flannel</td>
+<td>Centos 7.2</td>
+</tr>
+<tr>
+<td>202.193.75.11</td>
+<td>Node</td>
+<td>kube-proxy kubelet flannel</td>
+<td>Centos 7.2</td>
+</tr>
+</tbody>
+</table>
 <ul>
-<li><p>安装环境<br>| IP             | NAME   | 组件                                       | OS         |<br>| ————– | —— | —————————————- | ———- |<br>| 202.193.74.179 | Master | kube-apiserver,kube-scheduler,kube-controller-manager,etcd | Centos 7.2 |<br>| 202.193.75.34  | Node   | kube-proxy kubelet flannel               | Centos 7.2 |<br>| 202.193.75.11  | Node   | kube-proxy kubelet flannel               | Centos 7.2 |</p>
-</li>
-<li><p>关闭防火墙</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo systemctl stop firewalld  </div><div class="line">sudo systemctl disable firewalld</div></pre></td></tr></table></figure>
+<li>关闭防火墙<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo systemctl stop firewalld  </div><div class="line">sudo systemctl disable firewalld</div></pre></td></tr></table></figure>
 </li>
 </ul>
-<p>##2. 部署环境</p>
-<h3 id="Master"><a href="#Master" class="headerlink" title="Master"></a>Master</h3><ul>
+<h2 id="2-部署环境"><a href="#2-部署环境" class="headerlink" title="2. 部署环境"></a>2. 部署环境</h2><h3 id="Master"><a href="#Master" class="headerlink" title="Master"></a>Master</h3><ul>
 <li>安装etcd和kubernetes<br><code>sudo yum -y install etcd kubernetes-master</code></li>
 <li>配置文件<br>1.修改<em>/etc/etcd/etcd.conf</em> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"># [member]</div><div class="line">ETCD_NAME=default</div><div class="line">ETCD_DATA_DIR=&quot;/var/lib/etcd/default.etcd&quot;</div><div class="line">#ETCD_WAL_DIR=&quot;&quot;</div><div class="line">#ETCD_SNAPSHOT_COUNT=&quot;10000&quot;</div><div class="line">#ETCD_HEARTBEAT_INTERVAL=&quot;100&quot;</div><div class="line">#ETCD_ELECTION_TIMEOUT=&quot;1000&quot;</div><div class="line">#ETCD_LISTEN_PEER_URLS=&quot;http://localhost:2380&quot;</div><div class="line">ETCD_LISTEN_CLIENT_URLS=&quot;http://0.0.0.0:2379&quot;</div><div class="line">#ETCD_MAX_SNAPSHOTS=&quot;5&quot;</div><div class="line">#ETCD_MAX_WALS=&quot;5&quot;</div><div class="line">#ETCD_CORS=&quot;&quot;</div><div class="line">#</div><div class="line">#[cluster]</div><div class="line">#ETCD_INITIAL_ADVERTISE_PEER_URLS=&quot;http://localhost:2380&quot;</div><div class="line"># if you use different ETCD_NAME (e.g. test), set ETCD_INITIAL_CLUSTER value for this name, i.e. &quot;test=http://...&quot;</div><div class="line">#ETCD_INITIAL_CLUSTER=&quot;default=http://localhost:2380&quot;</div><div class="line">#ETCD_INITIAL_CLUSTER_STATE=&quot;new&quot;</div><div class="line">#ETCD_INITIAL_CLUSTER_TOKEN=&quot;etcd-cluster&quot;</div><div class="line">ETCD_ADVERTISE_CLIENT_URLS=&quot;http://localhost:2379&quot;</div><div class="line">#ETCD_DISCOVERY=&quot;&quot;</div><div class="line">#ETCD_DISCOVERY_SRV=&quot;&quot;</div><div class="line">#ETCD_DISCOVERY_FALLBACK=&quot;proxy&quot;</div><div class="line">#ETCD_DISCOVERY_PROXY=&quot;&quot;</div><div class="line">#ETCD_STRICT_RECONFIG_CHECK=&quot;false&quot;</div><div class="line">#ETCD_AUTO_COMPACTION_RETENTION=&quot;0&quot;</div><div class="line">#</div><div class="line">#[proxy]</div><div class="line">#ETCD_PROXY=&quot;off&quot;</div><div class="line">#ETCD_PROXY_FAILURE_WAIT=&quot;5000&quot;</div><div class="line">#ETCD_PROXY_REFRESH_INTERVAL=&quot;30000&quot;</div><div class="line">#ETCD_PROXY_DIAL_TIMEOUT=&quot;1000&quot;</div><div class="line">#ETCD_PROXY_WRITE_TIMEOUT=&quot;5000&quot;</div><div class="line">#ETCD_PROXY_READ_TIMEOUT=&quot;0&quot;</div><div class="line">#</div><div class="line">#[security]</div><div class="line">#ETCD_CERT_FILE=&quot;&quot;</div><div class="line">#ETCD_KEY_FILE=&quot;&quot;</div><div class="line">#ETCD_CLIENT_CERT_AUTH=&quot;false&quot;</div><div class="line">#ETCD_TRUSTED_CA_FILE=&quot;&quot;</div><div class="line">#ETCD_AUTO_TLS=&quot;false&quot;</div><div class="line">#ETCD_PEER_CERT_FILE=&quot;&quot;</div><div class="line">#ETCD_PEER_KEY_FILE=&quot;&quot;</div><div class="line">#ETCD_PEER_CLIENT_CERT_AUTH=&quot;false&quot;</div></pre></td></tr></table></figure>
 </li>
@@ -223,10 +253,10 @@
 <ul>
 <li>启动服务<br><code>sudo systemctl restart flanneld docker</code><br><code>sudo systemctl start kubelet kube-proxy</code><br><code>sudo systemctl enable flanneld kubelet kube-proxy</code></li>
 </ul>
-<p>##3. 验证<br>在master上<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@179 centos]# kubectl get nodes</div><div class="line">NAME            STATUS    AGE</div><div class="line">202.193.75.11   Ready     29m</div><div class="line">202.193.75.34   Ready     6m</div></pre></td></tr></table></figure></p>
-<p>##4. 附录</p>
-<p>error<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[centos@179 message_board]$ kubectl get pods</div><div class="line">No resources found.</div></pre></td></tr></table></figure></p>
-<p><a href="http://blog.csdn.net/jinzhencs/article/details/51435020" target="_blank" rel="external">参考链接</a><br>认证问题,可以跳过认证方法:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">#vim /etc/kubernetes/apiserver</div><div class="line">KUBE_ADMISSION_CONTROL=&quot;--admission_control=NamespaceLifecycle,NamespaceExists,LimitRanger,ResourceQuota&quot;</div></pre></td></tr></table></figure></p>
+<h2 id="3-验证"><a href="#3-验证" class="headerlink" title="3. 验证"></a>3. 验证</h2><p>在master上<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@179 centos]# kubectl get nodes</div><div class="line">NAME            STATUS    AGE</div><div class="line">202.193.75.11   Ready     29m</div><div class="line">202.193.75.34   Ready     6m</div></pre></td></tr></table></figure></p>
+<h2 id="4-附录"><a href="#4-附录" class="headerlink" title="4. 附录"></a>4. 附录</h2><p><strong>Error 1</strong>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[centos@179 message_board]$ kubectl get pods</div><div class="line">No resources found.</div></pre></td></tr></table></figure>
+<p>解决方法:<br><a href="http://blog.csdn.net/jinzhencs/article/details/51435020" target="_blank" rel="external">参考链接</a>,认证问题,可以跳过认证方法:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">#vim /etc/kubernetes/apiserver</div><div class="line">KUBE_ADMISSION_CONTROL=&quot;--admission_control=NamespaceLifecycle,NamespaceExists,LimitRanger,ResourceQuota&quot;</div></pre></td></tr></table></figure></p>
 
       
 
