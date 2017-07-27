@@ -6,18 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://qhzxc0015.com">
-  <title>Tag: 技术 | thk_days</title>
+  <title>Kubernetes 部署 | thk_days</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Blog~Come On!">
-<meta property="og:type" content="website">
-<meta property="og:title" content="thk_days">
-<meta property="og:url" content="http://qhzxc0015.com/tags/技术/index.html">
+  <meta name="description" content="Kubernetes yum安装本部署方法通过yum来进行自动安装,k8s版本并不是最新版,此方法简单,高效,操作性强,非常好">
+<meta name="keywords" content="技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kubernetes 部署">
+<meta property="og:url" content="http://qhzxc0015.com/2017/07/27/k8s 1.5.2/index.html">
 <meta property="og:site_name" content="thk_days">
-<meta property="og:description" content="Blog~Come On!">
+<meta property="og:description" content="Kubernetes yum安装本部署方法通过yum来进行自动安装,k8s版本并不是最新版,此方法简单,高效,操作性强,非常好">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-07-27T07:22:15.258Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="thk_days">
-<meta name="twitter:description" content="Blog~Come On!">
+<meta name="twitter:title" content="Kubernetes 部署">
+<meta name="twitter:description" content="Kubernetes yum安装本部署方法通过yum来进行自动安装,k8s版本并不是最新版,此方法简单,高效,操作性强,非常好">
   
     <link rel="alternative" href="/atom.xml" title="thk_days" type="application/atom+xml">
   
@@ -163,36 +165,107 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-k8s 1.5.2" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      Kubernetes 部署
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/27/k8s 1.5.2/" class="archive-article-date">
+
+        
+        <a href="/2017/07/27/k8s 1.5.2/" class="archive-article-date">
   	<time datetime="2017-07-27T07:19:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-27</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/27/k8s 1.5.2/">Kubernetes 部署</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Kubernetes-yum安装"><a href="#Kubernetes-yum安装" class="headerlink" title="Kubernetes yum安装"></a>Kubernetes yum安装</h1><p>本部署方法通过yum来进行自动安装,k8s版本并不是最新版,此方法简单,高效,操作性强,非常好<a id="more"></a></p>
+<p>本部署为1.5.2版本:<a href="http://blog.csdn.net/dream_broken/article/details/52954069" target="_blank" rel="external">部署参考</a>;可以根据具体需要进行版本升级:<a href="http://www.jianshu.com/p/41e55f4d0cb8" target="_blank" rel="external">升级参考</a></p>
+<p>##1. 前期工作</p>
+<ul>
+<li><p>安装环境<br>| IP             | NAME   | 组件                                       | OS         |<br>| ————– | —— | —————————————- | ———- |<br>| 202.193.74.179 | Master | kube-apiserver,kube-scheduler,kube-controller-manager,etcd | Centos 7.2 |<br>| 202.193.75.34  | Node   | kube-proxy kubelet flannel               | Centos 7.2 |<br>| 202.193.75.11  | Node   | kube-proxy kubelet flannel               | Centos 7.2 |</p>
+</li>
+<li><p>关闭防火墙</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo systemctl stop firewalld  </div><div class="line">sudo systemctl disable firewalld</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>##2. 部署环境</p>
+<h3 id="Master"><a href="#Master" class="headerlink" title="Master"></a>Master</h3><ul>
+<li>安装etcd和kubernetes<br><code>sudo yum -y install etcd kubernetes-master</code></li>
+<li>配置文件<br>1.修改<em>/etc/etcd/etcd.conf</em> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"># [member]</div><div class="line">ETCD_NAME=default</div><div class="line">ETCD_DATA_DIR=&quot;/var/lib/etcd/default.etcd&quot;</div><div class="line">#ETCD_WAL_DIR=&quot;&quot;</div><div class="line">#ETCD_SNAPSHOT_COUNT=&quot;10000&quot;</div><div class="line">#ETCD_HEARTBEAT_INTERVAL=&quot;100&quot;</div><div class="line">#ETCD_ELECTION_TIMEOUT=&quot;1000&quot;</div><div class="line">#ETCD_LISTEN_PEER_URLS=&quot;http://localhost:2380&quot;</div><div class="line">ETCD_LISTEN_CLIENT_URLS=&quot;http://0.0.0.0:2379&quot;</div><div class="line">#ETCD_MAX_SNAPSHOTS=&quot;5&quot;</div><div class="line">#ETCD_MAX_WALS=&quot;5&quot;</div><div class="line">#ETCD_CORS=&quot;&quot;</div><div class="line">#</div><div class="line">#[cluster]</div><div class="line">#ETCD_INITIAL_ADVERTISE_PEER_URLS=&quot;http://localhost:2380&quot;</div><div class="line"># if you use different ETCD_NAME (e.g. test), set ETCD_INITIAL_CLUSTER value for this name, i.e. &quot;test=http://...&quot;</div><div class="line">#ETCD_INITIAL_CLUSTER=&quot;default=http://localhost:2380&quot;</div><div class="line">#ETCD_INITIAL_CLUSTER_STATE=&quot;new&quot;</div><div class="line">#ETCD_INITIAL_CLUSTER_TOKEN=&quot;etcd-cluster&quot;</div><div class="line">ETCD_ADVERTISE_CLIENT_URLS=&quot;http://localhost:2379&quot;</div><div class="line">#ETCD_DISCOVERY=&quot;&quot;</div><div class="line">#ETCD_DISCOVERY_SRV=&quot;&quot;</div><div class="line">#ETCD_DISCOVERY_FALLBACK=&quot;proxy&quot;</div><div class="line">#ETCD_DISCOVERY_PROXY=&quot;&quot;</div><div class="line">#ETCD_STRICT_RECONFIG_CHECK=&quot;false&quot;</div><div class="line">#ETCD_AUTO_COMPACTION_RETENTION=&quot;0&quot;</div><div class="line">#</div><div class="line">#[proxy]</div><div class="line">#ETCD_PROXY=&quot;off&quot;</div><div class="line">#ETCD_PROXY_FAILURE_WAIT=&quot;5000&quot;</div><div class="line">#ETCD_PROXY_REFRESH_INTERVAL=&quot;30000&quot;</div><div class="line">#ETCD_PROXY_DIAL_TIMEOUT=&quot;1000&quot;</div><div class="line">#ETCD_PROXY_WRITE_TIMEOUT=&quot;5000&quot;</div><div class="line">#ETCD_PROXY_READ_TIMEOUT=&quot;0&quot;</div><div class="line">#</div><div class="line">#[security]</div><div class="line">#ETCD_CERT_FILE=&quot;&quot;</div><div class="line">#ETCD_KEY_FILE=&quot;&quot;</div><div class="line">#ETCD_CLIENT_CERT_AUTH=&quot;false&quot;</div><div class="line">#ETCD_TRUSTED_CA_FILE=&quot;&quot;</div><div class="line">#ETCD_AUTO_TLS=&quot;false&quot;</div><div class="line">#ETCD_PEER_CERT_FILE=&quot;&quot;</div><div class="line">#ETCD_PEER_KEY_FILE=&quot;&quot;</div><div class="line">#ETCD_PEER_CLIENT_CERT_AUTH=&quot;false&quot;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>2.修改<em>/etc/kubernetes/apiserver</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">###</div><div class="line"># kubernetes system config</div><div class="line">#</div><div class="line"># The following values are used to configure the kube-apiserver</div><div class="line">#</div><div class="line"></div><div class="line"># The address on the local server to listen to.</div><div class="line">KUBE_API_ADDRESS=&quot;--insecure-bind-address=0.0.0.0&quot;</div><div class="line"></div><div class="line"># The port on the local server to listen on.</div><div class="line"># KUBE_API_PORT=&quot;--port=8080&quot;</div><div class="line"></div><div class="line"># Port minions listen on</div><div class="line"># KUBELET_PORT=&quot;--kubelet-port=10250&quot;</div><div class="line"></div><div class="line"># Comma separated list of nodes in the etcd cluster</div><div class="line">KUBE_ETCD_SERVERS=&quot;--etcd-servers=http://127.0.0.1:2379&quot;</div><div class="line"></div><div class="line"># Address range to use for services</div><div class="line">KUBE_SERVICE_ADDRESSES=&quot;--service-cluster-ip-range=10.254.0.0/16&quot;</div><div class="line"></div><div class="line"># default admission control policies</div><div class="line">KUBE_ADMISSION_CONTROL=&quot;--admission-control=NamespaceLifecycle,NamespaceExists,LimitRanger,SecurityContextDeny,ServiceAccount,ResourceQuota&quot;</div><div class="line"></div><div class="line"># Add your own!</div><div class="line">KUBE_API_ARGS=&quot;&quot;</div></pre></td></tr></table></figure></p>
+<p>3.修改<em>/etc/kubernetes/controller-manager</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">###</div><div class="line"># The following values are used to configure the kubernetes controller-manager</div><div class="line"></div><div class="line"># defaults from config and apiserver should be adequate</div><div class="line"></div><div class="line"># Add your own!</div><div class="line">KUBE_CONTROLLER_MANAGER_ARGS=&quot;--node-monitor-grace-period=10s --pod-eviction-timeout=10s&quot;</div></pre></td></tr></table></figure></p>
+<p>4.修改<em>/etc/kubernetes/config</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">###</div><div class="line"># kubernetes system config</div><div class="line">#</div><div class="line"># The following values are used to configure various aspects of all</div><div class="line"># kubernetes services, including</div><div class="line">#</div><div class="line">#   kube-apiserver.service</div><div class="line">#   kube-controller-manager.service</div><div class="line">#   kube-scheduler.service</div><div class="line">#   kubelet.service</div><div class="line">#   kube-proxy.service</div><div class="line"># logging to stderr means we get it in the systemd journal</div><div class="line">KUBE_LOGTOSTDERR=&quot;--logtostderr=true&quot;</div><div class="line"></div><div class="line"># journal message level, 0 is debug</div><div class="line">KUBE_LOG_LEVEL=&quot;--v=0&quot;</div><div class="line"></div><div class="line"># Should this cluster be allowed to run privileged docker containers</div><div class="line">KUBE_ALLOW_PRIV=&quot;--allow-privileged=false&quot;</div><div class="line"></div><div class="line"># How the controller-manager, scheduler, and proxy find the apiserver</div><div class="line">KUBE_MASTER=&quot;--master=http://202.193.74.179:8080&quot;</div></pre></td></tr></table></figure></p>
+<ul>
+<li><p>启动服务<br>开机自启<code>sudo systemctl enable etcd kube-apiserver kube-scheduler kube-controller-manager</code><br>启动服务<code>sudo systemctl start etcd kube-apiserver kube-scheduler kube-controller-manager</code></p>
+</li>
+<li><p>配置etcd中的网络<br>node节点的flannel会拉取这里的配置<br><code>etcdctl mk /coreos.com/network/config &#39;{&quot;Network&quot;:&quot;172.17.0.0/16&quot;}&#39;</code></p>
+</li>
+</ul>
+<h3 id="Node-minions"><a href="#Node-minions" class="headerlink" title="Node(minions)"></a>Node(minions)</h3><ul>
+<li><p>安装kubernetes-node和 flannel(会自动安装docker)<br><code>sudo yum -y install kubernetes-node flannel</code></p>
+</li>
+<li><p>配置文件<br>1.修改<em>/etc/kubernetes/config</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">###</div><div class="line"># kubernetes system config</div><div class="line">#</div><div class="line"># The following values are used to configure various aspects of all</div><div class="line"># kubernetes services, including</div><div class="line">#</div><div class="line">#   kube-apiserver.service</div><div class="line">#   kube-controller-manager.service</div><div class="line">#   kube-scheduler.service</div><div class="line">#   kubelet.service</div><div class="line">#   kube-proxy.service</div><div class="line"># logging to stderr means we get it in the systemd journal</div><div class="line">KUBE_LOGTOSTDERR=&quot;--logtostderr=true&quot;</div><div class="line"></div><div class="line"># journal message level, 0 is debug</div><div class="line">KUBE_LOG_LEVEL=&quot;--v=0&quot;</div><div class="line"></div><div class="line"># Should this cluster be allowed to run privileged docker containers</div><div class="line">KUBE_ALLOW_PRIV=&quot;--allow-privileged=false&quot;</div><div class="line"></div><div class="line"># How the controller-manager, scheduler, and proxy find the apiserver</div><div class="line">#KUBE_MASTER=&quot;--master=http://127.0.0.1:8080&quot;</div><div class="line">KUBE_MASTER=&quot;--master=http://202.193.74.179:8080&quot;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>2.修改<em>/etc/kubernetes/kubelet</em> (注意修改每个node的IP)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">###</div><div class="line"># kubernetes kubelet (minion) config</div><div class="line"></div><div class="line"># The address for the info server to serve on (set to 0.0.0.0 or &quot;&quot; for all interfaces)</div><div class="line">KUBELET_ADDRESS=&quot;--address=127.0.0.1&quot;</div><div class="line"></div><div class="line"># The port for the info server to serve on</div><div class="line"># KUBELET_PORT=&quot;--port=10250&quot;</div><div class="line"></div><div class="line"># You may leave this blank to use the actual hostname</div><div class="line">KUBELET_HOSTNAME=&quot;--hostname-override=202.193.75.11&quot;</div><div class="line"></div><div class="line"># location of the api-server</div><div class="line">KUBELET_API_SERVER=&quot;--api-servers=http://202.193.74.179:8080&quot;</div><div class="line"></div><div class="line"># pod infrastructure container</div><div class="line">KUBELET_POD_INFRA_CONTAINER=&quot;--pod-infra-container-image=registry.access.redhat.com/rhel7/pod-infrastructure:latest&quot;</div><div class="line"></div><div class="line"># Add your own!</div><div class="line">KUBELET_ARGS=&quot;--pod-infra-container-image=kubernetes/pause&quot;</div></pre></td></tr></table></figure></p>
+<p>3.修改<em>/etc/sysconfig/flanneld</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"># Flanneld configuration options  </div><div class="line"></div><div class="line"># etcd url location.  Point this to the server where etcd runs</div><div class="line">FLANNEL_ETCD_ENDPOINTS=&quot;http://202.193.74.179:2379&quot;</div><div class="line"></div><div class="line"># etcd config key.  This is the configuration key that flannel queries</div><div class="line"># For address range assignment</div><div class="line">#FLANNEL_ETCD_PREFIX=&quot;/atomic.io/network&quot;</div><div class="line">FLANNEL_ETCD_PREFIX=&quot;/coreos.com/network&quot;</div><div class="line"></div><div class="line"># Any additional options that you want to pass</div><div class="line">FLANNEL_OPTIONS=&quot; -iface=eth33&quot;</div></pre></td></tr></table></figure></p>
+<p>其中<code>FLANNEL_OPTIONS=&quot; -iface=eth0&quot;</code>的eth0是网卡名称</p>
+<ul>
+<li>启动服务<br><code>sudo systemctl restart flanneld docker</code><br><code>sudo systemctl start kubelet kube-proxy</code><br><code>sudo systemctl enable flanneld kubelet kube-proxy</code></li>
+</ul>
+<p>##3. 验证<br>在master上<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@179 centos]# kubectl get nodes</div><div class="line">NAME            STATUS    AGE</div><div class="line">202.193.75.11   Ready     29m</div><div class="line">202.193.75.34   Ready     6m</div></pre></td></tr></table></figure></p>
+<p>##4. 附录</p>
+<p>error<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[centos@179 message_board]$ kubectl get pods</div><div class="line">No resources found.</div></pre></td></tr></table></figure></p>
+<p><a href="http://blog.csdn.net/jinzhencs/article/details/51435020" target="_blank" rel="external">参考链接</a><br>认证问题,可以跳过认证方法:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">#vim /etc/kubernetes/apiserver</div><div class="line">KUBE_ADMISSION_CONTROL=&quot;--admission_control=NamespaceLifecycle,NamespaceExists,LimitRanger,ResourceQuota&quot;</div></pre></td></tr></table></figure></p>
 
-        <div class="article-info info-on-right">
-          
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/支付宝.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/微信.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -204,95 +277,106 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://qhzxc0015.com/2017/07/27/k8s 1.5.2/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/20/second-blog/" class="archive-article-date">
-  	<time datetime="2017-07-20T13:55:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-20</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2017/07/20/first-blog/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">first blog</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/20/second-blog/">Second blog</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/20/md介绍/" class="archive-article-date">
-  	<time datetime="2017-07-20T13:55:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/20/md介绍/">Markdown介绍</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">技术</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+
 
 
           </div>
@@ -315,9 +399,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
