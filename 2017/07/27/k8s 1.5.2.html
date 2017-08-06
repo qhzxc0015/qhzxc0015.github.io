@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="本部署方法通过yum来进行自动安装,k8s版本并不是最新版,此方法简单,高效,操作性强,非常好">
+<meta name="keywords" content="技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kubernetes 部署">
+<meta property="og:url" content="http://qhzxc0015.com/2017/07/27/k8s 1.5.2.html">
+<meta property="og:site_name" content="thk_days">
+<meta property="og:description" content="本部署方法通过yum来进行自动安装,k8s版本并不是最新版,此方法简单,高效,操作性强,非常好">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2017-07-27T07:37:14.056Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kubernetes 部署">
+<meta name="twitter:description" content="本部署方法通过yum来进行自动安装,k8s版本并不是最新版,此方法简单,高效,操作性强,非常好">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: 'N6J4TXK9R2',
+      apiKey: '8f56e1a59671f4ffd8703ff3e840afc3',
+      indexName: 'blog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://qhzxc0015.com/2017/07/27/k8s 1.5.2.html"/>
+
+
+
+
+
+  <title>Kubernetes 部署 | thk_days</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">thk_days</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">I think that that that that that article wrote on the blog was wrong.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://qhzxc0015.com/2017/07/27/k8s 1.5.2.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zxc">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ou9i51fe5.bkt.clouddn.com/myface.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="thk_days">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Kubernetes 部署</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-27T15:19:06+08:00">
+                2017-07-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+
+		  
+		  
+          
+            
+          
+
+          
+          
+		  
+		           <span class="post-time">
+     &nbsp; | &nbsp;
+           <span class="post-meta-item-icon">
+             <i class="fa fa-calendar-o"></i>
+           </span>
+           <span class="post-meta-item-text">WordCount:</span>
+           <span class="post-count">951 (字)</span>
+           
+         </span>
+    
+      <span class="post-time">
+     &nbsp; | &nbsp;
+           <span class="post-meta-item-icon">
+             <i class="fa fa-calendar-o"></i>
+           </span>
+           <span class="post-meta-item-text">Readtime:</span>
+           <span class="post-count">5 (min)</span>
+           
+         </span>
+		  
+		  
+		  
+		  
+		  
+		  
+
+		  
+		  
+		  
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>本部署方法通过yum来进行自动安装,k8s版本并不是最新版,此方法简单,高效,操作性强,非常好<br><a id="more"></a></p>
+<blockquote>
+<p>本部署为1.5.2版本:<a href="http://blog.csdn.net/dream_broken/article/details/52954069" target="_blank" rel="external">部署参考</a>;可以根据具体需要进行版本升级:<a href="http://www.jianshu.com/p/41e55f4d0cb8" target="_blank" rel="external">升级参考</a></p>
+</blockquote>
+<h2 id="1-前期工作"><a href="#1-前期工作" class="headerlink" title="1. 前期工作"></a>1. 前期工作</h2><ul>
+<li>安装环境</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>IP</th>
+<th>NAME</th>
+<th>组件</th>
+<th>OS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>202.193.74.179</td>
+<td>Master</td>
+<td>kube-apiserver,kube-scheduler,kube-controller-manager,etcd</td>
+<td>Centos 7.2</td>
+</tr>
+<tr>
+<td>202.193.75.34</td>
+<td>Node</td>
+<td>kube-proxy kubelet flannel</td>
+<td>Centos 7.2</td>
+</tr>
+<tr>
+<td>202.193.75.11</td>
+<td>Node</td>
+<td>kube-proxy kubelet flannel</td>
+<td>Centos 7.2</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>关闭防火墙<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo systemctl stop firewalld  </div><div class="line">sudo systemctl disable firewalld</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="2-部署环境"><a href="#2-部署环境" class="headerlink" title="2. 部署环境"></a>2. 部署环境</h2><h3 id="Master"><a href="#Master" class="headerlink" title="Master"></a>Master</h3><ul>
+<li>安装etcd和kubernetes<br><code>sudo yum -y install etcd kubernetes-master</code></li>
+<li>配置文件<br>1.修改<em>/etc/etcd/etcd.conf</em> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"># [member]</div><div class="line">ETCD_NAME=default</div><div class="line">ETCD_DATA_DIR=&quot;/var/lib/etcd/default.etcd&quot;</div><div class="line">#ETCD_WAL_DIR=&quot;&quot;</div><div class="line">#ETCD_SNAPSHOT_COUNT=&quot;10000&quot;</div><div class="line">#ETCD_HEARTBEAT_INTERVAL=&quot;100&quot;</div><div class="line">#ETCD_ELECTION_TIMEOUT=&quot;1000&quot;</div><div class="line">#ETCD_LISTEN_PEER_URLS=&quot;http://localhost:2380&quot;</div><div class="line">ETCD_LISTEN_CLIENT_URLS=&quot;http://0.0.0.0:2379&quot;</div><div class="line">#ETCD_MAX_SNAPSHOTS=&quot;5&quot;</div><div class="line">#ETCD_MAX_WALS=&quot;5&quot;</div><div class="line">#ETCD_CORS=&quot;&quot;</div><div class="line">#</div><div class="line">#[cluster]</div><div class="line">#ETCD_INITIAL_ADVERTISE_PEER_URLS=&quot;http://localhost:2380&quot;</div><div class="line"># if you use different ETCD_NAME (e.g. test), set ETCD_INITIAL_CLUSTER value for this name, i.e. &quot;test=http://...&quot;</div><div class="line">#ETCD_INITIAL_CLUSTER=&quot;default=http://localhost:2380&quot;</div><div class="line">#ETCD_INITIAL_CLUSTER_STATE=&quot;new&quot;</div><div class="line">#ETCD_INITIAL_CLUSTER_TOKEN=&quot;etcd-cluster&quot;</div><div class="line">ETCD_ADVERTISE_CLIENT_URLS=&quot;http://localhost:2379&quot;</div><div class="line">#ETCD_DISCOVERY=&quot;&quot;</div><div class="line">#ETCD_DISCOVERY_SRV=&quot;&quot;</div><div class="line">#ETCD_DISCOVERY_FALLBACK=&quot;proxy&quot;</div><div class="line">#ETCD_DISCOVERY_PROXY=&quot;&quot;</div><div class="line">#ETCD_STRICT_RECONFIG_CHECK=&quot;false&quot;</div><div class="line">#ETCD_AUTO_COMPACTION_RETENTION=&quot;0&quot;</div><div class="line">#</div><div class="line">#[proxy]</div><div class="line">#ETCD_PROXY=&quot;off&quot;</div><div class="line">#ETCD_PROXY_FAILURE_WAIT=&quot;5000&quot;</div><div class="line">#ETCD_PROXY_REFRESH_INTERVAL=&quot;30000&quot;</div><div class="line">#ETCD_PROXY_DIAL_TIMEOUT=&quot;1000&quot;</div><div class="line">#ETCD_PROXY_WRITE_TIMEOUT=&quot;5000&quot;</div><div class="line">#ETCD_PROXY_READ_TIMEOUT=&quot;0&quot;</div><div class="line">#</div><div class="line">#[security]</div><div class="line">#ETCD_CERT_FILE=&quot;&quot;</div><div class="line">#ETCD_KEY_FILE=&quot;&quot;</div><div class="line">#ETCD_CLIENT_CERT_AUTH=&quot;false&quot;</div><div class="line">#ETCD_TRUSTED_CA_FILE=&quot;&quot;</div><div class="line">#ETCD_AUTO_TLS=&quot;false&quot;</div><div class="line">#ETCD_PEER_CERT_FILE=&quot;&quot;</div><div class="line">#ETCD_PEER_KEY_FILE=&quot;&quot;</div><div class="line">#ETCD_PEER_CLIENT_CERT_AUTH=&quot;false&quot;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>2.修改<em>/etc/kubernetes/apiserver</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">###</div><div class="line"># kubernetes system config</div><div class="line">#</div><div class="line"># The following values are used to configure the kube-apiserver</div><div class="line">#</div><div class="line"></div><div class="line"># The address on the local server to listen to.</div><div class="line">KUBE_API_ADDRESS=&quot;--insecure-bind-address=0.0.0.0&quot;</div><div class="line"></div><div class="line"># The port on the local server to listen on.</div><div class="line"># KUBE_API_PORT=&quot;--port=8080&quot;</div><div class="line"></div><div class="line"># Port minions listen on</div><div class="line"># KUBELET_PORT=&quot;--kubelet-port=10250&quot;</div><div class="line"></div><div class="line"># Comma separated list of nodes in the etcd cluster</div><div class="line">KUBE_ETCD_SERVERS=&quot;--etcd-servers=http://127.0.0.1:2379&quot;</div><div class="line"></div><div class="line"># Address range to use for services</div><div class="line">KUBE_SERVICE_ADDRESSES=&quot;--service-cluster-ip-range=10.254.0.0/16&quot;</div><div class="line"></div><div class="line"># default admission control policies</div><div class="line">KUBE_ADMISSION_CONTROL=&quot;--admission-control=NamespaceLifecycle,NamespaceExists,LimitRanger,SecurityContextDeny,ServiceAccount,ResourceQuota&quot;</div><div class="line"></div><div class="line"># Add your own!</div><div class="line">KUBE_API_ARGS=&quot;&quot;</div></pre></td></tr></table></figure></p>
+<p>3.修改<em>/etc/kubernetes/controller-manager</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">###</div><div class="line"># The following values are used to configure the kubernetes controller-manager</div><div class="line"></div><div class="line"># defaults from config and apiserver should be adequate</div><div class="line"></div><div class="line"># Add your own!</div><div class="line">KUBE_CONTROLLER_MANAGER_ARGS=&quot;--node-monitor-grace-period=10s --pod-eviction-timeout=10s&quot;</div></pre></td></tr></table></figure></p>
+<p>4.修改<em>/etc/kubernetes/config</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">###</div><div class="line"># kubernetes system config</div><div class="line">#</div><div class="line"># The following values are used to configure various aspects of all</div><div class="line"># kubernetes services, including</div><div class="line">#</div><div class="line">#   kube-apiserver.service</div><div class="line">#   kube-controller-manager.service</div><div class="line">#   kube-scheduler.service</div><div class="line">#   kubelet.service</div><div class="line">#   kube-proxy.service</div><div class="line"># logging to stderr means we get it in the systemd journal</div><div class="line">KUBE_LOGTOSTDERR=&quot;--logtostderr=true&quot;</div><div class="line"></div><div class="line"># journal message level, 0 is debug</div><div class="line">KUBE_LOG_LEVEL=&quot;--v=0&quot;</div><div class="line"></div><div class="line"># Should this cluster be allowed to run privileged docker containers</div><div class="line">KUBE_ALLOW_PRIV=&quot;--allow-privileged=false&quot;</div><div class="line"></div><div class="line"># How the controller-manager, scheduler, and proxy find the apiserver</div><div class="line">KUBE_MASTER=&quot;--master=http://202.193.74.179:8080&quot;</div></pre></td></tr></table></figure></p>
+<ul>
+<li><p>启动服务<br>开机自启<code>sudo systemctl enable etcd kube-apiserver kube-scheduler kube-controller-manager</code><br>启动服务<code>sudo systemctl start etcd kube-apiserver kube-scheduler kube-controller-manager</code></p>
+</li>
+<li><p>配置etcd中的网络<br>node节点的flannel会拉取这里的配置<br><code>etcdctl mk /coreos.com/network/config &#39;{&quot;Network&quot;:&quot;172.17.0.0/16&quot;}&#39;</code></p>
+</li>
+</ul>
+<h3 id="Node-minions"><a href="#Node-minions" class="headerlink" title="Node(minions)"></a>Node(minions)</h3><ul>
+<li><p>安装kubernetes-node和 flannel(会自动安装docker)<br><code>sudo yum -y install kubernetes-node flannel</code></p>
+</li>
+<li><p>配置文件<br>1.修改<em>/etc/kubernetes/config</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">###</div><div class="line"># kubernetes system config</div><div class="line">#</div><div class="line"># The following values are used to configure various aspects of all</div><div class="line"># kubernetes services, including</div><div class="line">#</div><div class="line">#   kube-apiserver.service</div><div class="line">#   kube-controller-manager.service</div><div class="line">#   kube-scheduler.service</div><div class="line">#   kubelet.service</div><div class="line">#   kube-proxy.service</div><div class="line"># logging to stderr means we get it in the systemd journal</div><div class="line">KUBE_LOGTOSTDERR=&quot;--logtostderr=true&quot;</div><div class="line"></div><div class="line"># journal message level, 0 is debug</div><div class="line">KUBE_LOG_LEVEL=&quot;--v=0&quot;</div><div class="line"></div><div class="line"># Should this cluster be allowed to run privileged docker containers</div><div class="line">KUBE_ALLOW_PRIV=&quot;--allow-privileged=false&quot;</div><div class="line"></div><div class="line"># How the controller-manager, scheduler, and proxy find the apiserver</div><div class="line">#KUBE_MASTER=&quot;--master=http://127.0.0.1:8080&quot;</div><div class="line">KUBE_MASTER=&quot;--master=http://202.193.74.179:8080&quot;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>2.修改<em>/etc/kubernetes/kubelet</em> (注意修改每个node的IP)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">###</div><div class="line"># kubernetes kubelet (minion) config</div><div class="line"></div><div class="line"># The address for the info server to serve on (set to 0.0.0.0 or &quot;&quot; for all interfaces)</div><div class="line">KUBELET_ADDRESS=&quot;--address=127.0.0.1&quot;</div><div class="line"></div><div class="line"># The port for the info server to serve on</div><div class="line"># KUBELET_PORT=&quot;--port=10250&quot;</div><div class="line"></div><div class="line"># You may leave this blank to use the actual hostname</div><div class="line">KUBELET_HOSTNAME=&quot;--hostname-override=202.193.75.11&quot;</div><div class="line"></div><div class="line"># location of the api-server</div><div class="line">KUBELET_API_SERVER=&quot;--api-servers=http://202.193.74.179:8080&quot;</div><div class="line"></div><div class="line"># pod infrastructure container</div><div class="line">KUBELET_POD_INFRA_CONTAINER=&quot;--pod-infra-container-image=registry.access.redhat.com/rhel7/pod-infrastructure:latest&quot;</div><div class="line"></div><div class="line"># Add your own!</div><div class="line">KUBELET_ARGS=&quot;--pod-infra-container-image=kubernetes/pause&quot;</div></pre></td></tr></table></figure></p>
+<p>3.修改<em>/etc/sysconfig/flanneld</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"># Flanneld configuration options  </div><div class="line"></div><div class="line"># etcd url location.  Point this to the server where etcd runs</div><div class="line">FLANNEL_ETCD_ENDPOINTS=&quot;http://202.193.74.179:2379&quot;</div><div class="line"></div><div class="line"># etcd config key.  This is the configuration key that flannel queries</div><div class="line"># For address range assignment</div><div class="line">#FLANNEL_ETCD_PREFIX=&quot;/atomic.io/network&quot;</div><div class="line">FLANNEL_ETCD_PREFIX=&quot;/coreos.com/network&quot;</div><div class="line"></div><div class="line"># Any additional options that you want to pass</div><div class="line">FLANNEL_OPTIONS=&quot; -iface=eth33&quot;</div></pre></td></tr></table></figure></p>
+<p>其中<code>FLANNEL_OPTIONS=&quot; -iface=eth0&quot;</code>的eth0是网卡名称</p>
+<ul>
+<li>启动服务<br><code>sudo systemctl restart flanneld docker</code><br><code>sudo systemctl start kubelet kube-proxy</code><br><code>sudo systemctl enable flanneld kubelet kube-proxy</code></li>
+</ul>
+<h2 id="3-验证"><a href="#3-验证" class="headerlink" title="3. 验证"></a>3. 验证</h2><p>在master上<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@179 centos]# kubectl get nodes</div><div class="line">NAME            STATUS    AGE</div><div class="line">202.193.75.11   Ready     29m</div><div class="line">202.193.75.34   Ready     6m</div></pre></td></tr></table></figure></p>
+<h2 id="4-附录"><a href="#4-附录" class="headerlink" title="4. 附录"></a>4. 附录</h2><p><strong>Error 1</strong>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[centos@179 message_board]$ kubectl get pods</div><div class="line">No resources found.</div></pre></td></tr></table></figure>
+<p>解决方法:<br><a href="http://blog.csdn.net/jinzhencs/article/details/51435020" target="_blank" rel="external">参考链接</a>,认证问题,可以跳过认证方法:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">#vim /etc/kubernetes/apiserver</div><div class="line">KUBE_ADMISSION_CONTROL=&quot;--admission_control=NamespaceLifecycle,NamespaceExists,LimitRanger,ResourceQuota&quot;</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/技术/" rel="tag"># 技术</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/20/first-blog.html" rel="next" title="first blog">
+                <i class="fa fa-chevron-left"></i> first blog
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://ou9i51fe5.bkt.clouddn.com/myface.gif"
+               alt="zxc" />
+          <p class="site-author-name" itemprop="name">zxc</p>
+           
+              <p class="site-description motion-element" itemprop="description">程序猿 | 熬夜猫 | 次元狗</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-前期工作"><span class="nav-number">1.</span> <span class="nav-text">1. 前期工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-部署环境"><span class="nav-number">2.</span> <span class="nav-text">2. 部署环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Master"><span class="nav-number">2.1.</span> <span class="nav-text">Master</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Node-minions"><span class="nav-number">2.2.</span> <span class="nav-text">Node(minions)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-验证"><span class="nav-number">3.</span> <span class="nav-text">3. 验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-附录"><span class="nav-number">4.</span> <span class="nav-text">4. 附录</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Powered By zxc</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by 
+</div>
+
+<div class="theme-info">
+  Theme -
+    - thk_days
+</div>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.1"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+
+
+</body>
+</html>
