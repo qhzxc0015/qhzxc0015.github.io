@@ -1694,7 +1694,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ff4a74;
+  background: #1cffdd;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2668,7 +2668,7 @@ embed {
   display: inline-block;
 }
 .header {
-  background: url("http://ou9i51fe5.bkt.clouddn.com/top10.jpg");
+  background: url("http://ou9i51fe5.bkt.clouddn.com/header_background.jpg");
 }
 .site-subtitle {
   font-size: 15px;
@@ -2688,7 +2688,7 @@ embed {
   background: rgba(240,240,240,0.5);
   margin-left: auto;
   margin-right: auto;
-  width: 300px;
+  width: 330px;
   border-radius: initial;
 }
 a {
@@ -2715,7 +2715,7 @@ a:hover {
 }
 .header-inner {
   padding: 45px 0 25px;
-  width: 700px;
+  width: 70px;
 }
 .site-author-name {
   font-family: 'Comic Sans MS', sans-serif;
