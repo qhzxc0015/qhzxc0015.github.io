@@ -102,7 +102,7 @@
 <meta property="og:description" content="GFW真的强，所以国外镜像真的太难拉下来了,因此采用 docker registry 来存储镜像供其他节点使用">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://ou9i51fe5.bkt.clouddn.com/harbor.png">
-<meta property="og:updated_time" content="2017-08-17T08:30:03.158Z">
+<meta property="og:updated_time" content="2017-08-17T08:37:43.338Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker Registry">
 <meta name="twitter:description" content="GFW真的强，所以国外镜像真的太难拉下来了,因此采用 docker registry 来存储镜像供其他节点使用">
@@ -402,32 +402,39 @@
 <p>GFW真的强，所以国外镜像真的太难拉下来了,因此采用 <em>docker registry</em> 来存储镜像供其他节点使用</p>
 </blockquote>
 <p><img src="http://ou9i51fe5.bkt.clouddn.com/harbor.png" alt=""><br><a id="more"></a></p>
-<p>##1. Docker版</p>
-<p>国外镜像真的太难拉下来了,所以采用 <em>docker registry</em> 来存储镜像供其他节点使用,<br>拉取registry镜像<br><code>sudo docker pull hub.c.163.com/library/registry:2.6.0</code><br>启动仓库<br><code>sudo docker run -d -p 5000:5000 -v /docker/registry:/tmp/registry hub.c.163.com/library/registry:2.6.0</code><br>将各个镜像上传到仓库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo docker tag gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64:1.14.2 202.193.74.222/k8s-dns-dnsmasq-nanny-amd64:1.14.2</div><div class="line">sudo docker push 202.193.74.222:5000/k8s-dns-dnsmasq-nanny-amd64:1.14.2</div></pre></td></tr></table></figure></p>
-<p>##2. Harbor版<br>参考文献：<br><a href="http://www.studylinux.net/?p=4450" target="_blank" rel="external">harbor搭建</a><br><a href="http://tonybai.com/2017/06/09/setup-a-high-availability-private-registry-based-on-harbor-and-cephfs/" target="_blank" rel="external">harbor搭建与问题修改</a></p>
+<h2 id="1-Docker版"><a href="#1-Docker版" class="headerlink" title="1. Docker版"></a>1. Docker版</h2><p>国外镜像真的太难拉下来了,所以采用 <em>docker registry</em> 来存储镜像供其他节点使用,<br>拉取registry镜像<br><code>sudo docker pull hub.c.163.com/library/registry:2.6.0</code><br>启动仓库<br><code>sudo docker run -d -p 5000:5000 -v /docker/registry:/tmp/registry hub.c.163.com/library/registry:2.6.0</code><br>将各个镜像上传到仓库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo docker tag gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64:1.14.2 202.193.74.222/k8s-dns-dnsmasq-nanny-amd64:1.14.2</div><div class="line">sudo docker push 202.193.74.222:5000/k8s-dns-dnsmasq-nanny-amd64:1.14.2</div></pre></td></tr></table></figure></p>
+<h2 id="2-Harbor版"><a href="#2-Harbor版" class="headerlink" title="2. Harbor版"></a>2. Harbor版</h2><p>参考文献：<br><a href="http://www.studylinux.net/?p=4450" target="_blank" rel="external">harbor搭建</a><br><a href="http://tonybai.com/2017/06/09/setup-a-high-availability-private-registry-based-on-harbor-and-cephfs/" target="_blank" rel="external">harbor搭建与问题修改</a></p>
 <p>Harbor也是基于registry镜像进行搭建的,可视化界面比较友好,<a href="https://github.com/vmware/harbor/releases" target="_blank" rel="external">官网下载</a>分为在线版和离线版,建议用离线版,因为在线版需要自己在国外网站拉取镜像,伟大的墙的威力还是有的,离线版就简单了,直接有版本对应好的镜像.</p>
 <ul>
-<li><p>环境与配置<br>安装环境:docker1.10+,python2.7+,docker-compose1.6.0+<br>下载离线安装包<em>harbor-offline</em>,配置<code>harbor.cfg</code>修改:</p>
+<li>环境与配置<br>安装环境:docker1.10+,python2.7+,docker-compose1.6.0+<br>下载离线安装包<em>harbor-offline</em>,配置<code>harbor.cfg</code>修改:</li>
+</ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">hostname = n2</div><div class="line">db_password = admin</div><div class="line">harbor_admin_password = admin    #这个是登录密码</div></pre></td></tr></table></figure>
-</li>
+<ul>
 <li><p>启动与访问<br>通过<code>docker-compose.yml</code>修改端口号<br>再通过<code>./prepare</code>来更新配置<br>之后进行<code>./install.sh</code>来安装<br>最后通过<code>docker-compose up -d</code>来启动<br>启动后通过<code>n2:80</code>来访问仓库</p>
 </li>
 <li><p>登录与上传<br>先进行登录<code>docker login n2:80</code>提示<em>Login Succeeded</em>为安装成功<br>注:这里上传需要先在web端建好项目名,比如上传到仓库名<code>library</code>中:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo docker tag n2:80/library/test:v1</div><div class="line">sudo docker push n2:80/library/test:v1</div></pre></td></tr></table></figure>
 </li>
 </ul>
-<p>##3. Errors</p>
-<p><strong>E1</strong>:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">test@Test1:~$ sudo docker push 202.193.74.222:5000/test:latest</div><div class="line"># ERROR</div><div class="line">The push refers to a repository [202.193.74.222:5000/test]</div><div class="line">Get https://202.193.74.222:5000/v1/_ping: http: server gave HTTP response to HTTPS client</div></pre></td></tr></table></figure></p>
-<p>解决方法1:<br>在<em>/etc/docker/</em>目录下，创建<code>daemon.json</code>文件。在文件中写入：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123; &quot;insecure-registries&quot;:[&quot;ip:5000&quot;] &#125;</div></pre></td></tr></table></figure></p>
-<p>解决方法2:<br>Centos中<code>vim /etc/sysconfig/docker</code>,在文件中添加:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ADD_REGISTRY=&apos;--add-registry e2:80&apos;</div><div class="line">INSECURE_REGISTRY=&apos;--insecure-registry e2:80&apos;</div></pre></td></tr></table></figure></p>
-<p>解决方法3:<br>Ubuntu中<code>vim /etc/default/docker</code>,在文件中添加:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">DOCKER_OPTS=&quot;--dns 8.8.8.8 --dns 8.8.4.4 --insecure-registry=n2:80&quot;</div></pre></td></tr></table></figure></p>
-<p>重启docker<code>sudo systemctl restart docker</code><br><strong>E2</strong>:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">test@Test1:~$ sudo docker push n2:80/library/test:v1</div><div class="line"></div><div class="line">85782553e37a: Waiting   </div><div class="line">745f5be9952c: Waiting   </div><div class="line">denied: requested access to the resource is denied</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo docker tag n2:80/library/test:v1</div><div class="line">sudo docker push n2:80/library/test:v1</div></pre></td></tr></table></figure>
+<h2 id="3-Errors"><a href="#3-Errors" class="headerlink" title="3. Errors"></a>3. Errors</h2><p><strong>E1</strong>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">test@Test1:~$ sudo docker push 202.193.74.222:5000/test:latest</div><div class="line"># ERROR</div><div class="line">The push refers to a repository [202.193.74.222:5000/test]</div><div class="line">Get https://202.193.74.222:5000/v1/_ping: http: server gave HTTP response to HTTPS client</div></pre></td></tr></table></figure>
+<p>解决方法1:<br>在<em>/etc/docker/</em>目录下，创建<code>daemon.json</code>文件。在文件中写入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123; &quot;insecure-registries&quot;:[&quot;ip:5000&quot;] &#125;</div></pre></td></tr></table></figure>
+<p>解决方法2:<br>Centos中<code>vim /etc/sysconfig/docker</code>,在文件中添加:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ADD_REGISTRY=&apos;--add-registry e2:80&apos;</div><div class="line">INSECURE_REGISTRY=&apos;--insecure-registry e2:80&apos;</div></pre></td></tr></table></figure>
+<p>解决方法3:<br>Ubuntu中<code>vim /etc/default/docker</code>,在文件中添加:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">DOCKER_OPTS=&quot;--dns 8.8.8.8 --dns 8.8.4.4 --insecure-registry=n2:80&quot;</div></pre></td></tr></table></figure>
+<p>重启docker<code>sudo systemctl restart docker</code><br><strong>E2</strong>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">test@Test1:~$ sudo docker push n2:80/library/test:v1</div><div class="line"></div><div class="line">85782553e37a: Waiting   </div><div class="line">745f5be9952c: Waiting   </div><div class="line">denied: requested access to the resource is denied</div></pre></td></tr></table></figure>
 <p>解决方法1:<br>先登录才可以上传,进行登录操作</p>
 <p>解决方法2:<br>用hosts名称会异常,建议直接使用ip</p>
-<p><strong>E3</strong>:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ERROR: for proxy  Cannot start service proxy: driver failed programming external connectivity on endpoint nginx (fdeb3e538d5f8d714ea5c79a9f3f127f05f7ba5d519e09c4c30ef81f40b2fe77): Error starting userland proxy: listen tcp 0.0.0.0:80: bind: address already in use</div></pre></td></tr></table></figure></p>
-<p>端口占用问题,可以通过修改端口来完成,在<em>harbor/docker-compose.yml</em>中修改,比如此处的80端口修改为8080操作如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">proxy:</div><div class="line">  image: vmware/nginx:1.11.5-patched</div><div class="line">  container_name: nginx</div><div class="line">  restart: always</div><div class="line">  volumes:</div><div class="line">    - ./common/config/nginx:/etc/nginx:z</div><div class="line">  networks:</div><div class="line">    - harbor</div><div class="line">  ports:</div><div class="line">    - 8080:80</div><div class="line">    - 444:443</div><div class="line">    - 4443:4443</div><div class="line">  depends_on:</div><div class="line">    - mysql</div><div class="line">    - registry</div><div class="line">    - ui</div><div class="line">    - log</div><div class="line">  logging:</div><div class="line">    driver: &quot;syslog&quot;</div><div class="line">    options:</div><div class="line">      syslog-address: &quot;tcp://127.0.0.1:1514&quot;</div><div class="line">      tag: &quot;proxy&quot;</div></pre></td></tr></table></figure></p>
+<p><strong>E3</strong>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ERROR: for proxy  Cannot start service proxy: driver failed programming external connectivity on endpoint nginx (fdeb3e538d5f8d714ea5c79a9f3f127f05f7ba5d519e09c4c30ef81f40b2fe77): Error starting userland proxy: listen tcp 0.0.0.0:80: bind: address already in use</div></pre></td></tr></table></figure>
+<p>端口占用问题,可以通过修改端口来完成,在<em>harbor/docker-compose.yml</em>中修改,比如此处的80端口修改为8080操作如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">proxy:</div><div class="line">  image: vmware/nginx:1.11.5-patched</div><div class="line">  container_name: nginx</div><div class="line">  restart: always</div><div class="line">  volumes:</div><div class="line">    - ./common/config/nginx:/etc/nginx:z</div><div class="line">  networks:</div><div class="line">    - harbor</div><div class="line">  ports:</div><div class="line">    - 8080:80</div><div class="line">    - 444:443</div><div class="line">    - 4443:4443</div><div class="line">  depends_on:</div><div class="line">    - mysql</div><div class="line">    - registry</div><div class="line">    - ui</div><div class="line">    - log</div><div class="line">  logging:</div><div class="line">    driver: &quot;syslog&quot;</div><div class="line">    options:</div><div class="line">      syslog-address: &quot;tcp://127.0.0.1:1514&quot;</div><div class="line">      tag: &quot;proxy&quot;</div></pre></td></tr></table></figure>
 <p>注意这里修改了之后在上面问题E1,E2中的修改也端口</p>
-<p>##4. Shells<br>批量上传脚本<code>push_images.sh</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line">images=(kube-proxy-amd64:v1.6.6 kube-scheduler-amd64:v1.6.6 kube-controller-manager-amd64:v1.6.6 kube-apiserver-amd64:v1.6.6 etcd-amd64:3.0.17 pause-amd64:3.0 kubernetes-dashboard-amd64:v1.6.1 k8s-dns-sidecar-amd64:1.14.2 k8s-dns-kube-dns-amd64:1.14.2 k8s-dns-dnsmasq-nanny-amd64:1.14.2  etcd:v3.1.5)</div><div class="line">for imageName in $&#123;images[@]&#125; ; do</div><div class="line">  sudo docker tag gcr.io/google_containers/$imageName e2:5000/$imageName</div><div class="line">  sudo docker push e2:5000/$imageName</div><div class="line">  sudo docker rmi e2:5000/$imageName</div><div class="line">done</div></pre></td></tr></table></figure></p>
+<h2 id="4-Shells"><a href="#4-Shells" class="headerlink" title="4. Shells"></a>4. Shells</h2><p>批量上传脚本<code>push_images.sh</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line">images=(kube-proxy-amd64:v1.6.6 kube-scheduler-amd64:v1.6.6 kube-controller-manager-amd64:v1.6.6 kube-apiserver-amd64:v1.6.6 etcd-amd64:3.0.17 pause-amd64:3.0 kubernetes-dashboard-amd64:v1.6.1 k8s-dns-sidecar-amd64:1.14.2 k8s-dns-kube-dns-amd64:1.14.2 k8s-dns-dnsmasq-nanny-amd64:1.14.2  etcd:v3.1.5)</div><div class="line">for imageName in $&#123;images[@]&#125; ; do</div><div class="line">  sudo docker tag gcr.io/google_containers/$imageName e2:5000/$imageName</div><div class="line">  sudo docker push e2:5000/$imageName</div><div class="line">  sudo docker rmi e2:5000/$imageName</div><div class="line">done</div></pre></td></tr></table></figure>
 <p>批量下载脚本<code>pull_images.sh</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash## 标题 ##</div><div class="line">images=(kube-proxy-amd64:v1.6.6 kube-scheduler-amd64:v1.6.6 kube-controller-manager-amd64:v1.6.6 kube-apiserver-amd64:v1.6.6 etcd-amd64:3.0.17 pause-amd64:3.0 kubernetes-dashboard-amd64:v1.6.1 k8s-dns-sidecar-amd64:1.14.2 k8s-dns-kube-dns-amd64:1.14.2 k8s-dns-dnsmasq-nanny-amd64:1.14.2  etcd:v3.1.5)</div><div class="line">for imageName in $&#123;images[@]&#125; ; do</div><div class="line">  sudo docker pull e2:5000/$imageName</div><div class="line">  sudo docker tag e2:5000/$imageName gcr.io/google_containers/$imageName</div><div class="line">  sudo docker rmi e2:5000/$imageName</div><div class="line">done</div></pre></td></tr></table></figure></p>
 
       
@@ -532,8 +539,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="http://ou9i51fe5.bkt.clouddn.com/myface.gif"
@@ -586,6 +602,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Docker版"><span class="nav-number">1.</span> <span class="nav-text">1. Docker版</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Harbor版"><span class="nav-number">2.</span> <span class="nav-text">2. Harbor版</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Errors"><span class="nav-number">3.</span> <span class="nav-text">3. Errors</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Shells"><span class="nav-number">4.</span> <span class="nav-text">4. Shells</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
