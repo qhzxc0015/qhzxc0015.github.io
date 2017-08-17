@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="技术," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -93,18 +93,19 @@
 
 
 
-<meta name="description" content="Markdown 语法简单，记忆负担小，纯文本，流畅书写，无违和感，各种实时渲染效果,所以被刚广泛使用">
-<meta name="keywords" content="技术">
+<meta name="description" content="CoreOS是一个基于Linux 内核的轻量级操作系统，为了计算机集群的基础设施建设而生，专注于自动化，轻松部署，安全，可靠，规模化。作为一个操作系统，CoreOS 提供了在应用容器内部署应用所需要的基础功能环境以及一系列用于服务发现和配置共享的内建工具。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Markdown介绍">
-<meta property="og:url" content="http://qhzxc0015.com/2017/07/20/md介绍.html">
+<meta property="og:title" content="thk_days">
+<meta property="og:url" content="http://qhzxc0015.com/2017/08/17/05. coreos搭建.html">
 <meta property="og:site_name" content="thk_days">
-<meta property="og:description" content="Markdown 语法简单，记忆负担小，纯文本，流畅书写，无违和感，各种实时渲染效果,所以被刚广泛使用">
+<meta property="og:description" content="CoreOS是一个基于Linux 内核的轻量级操作系统，为了计算机集群的基础设施建设而生，专注于自动化，轻松部署，安全，可靠，规模化。作为一个操作系统，CoreOS 提供了在应用容器内部署应用所需要的基础功能环境以及一系列用于服务发现和配置共享的内建工具。">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-08-09T08:48:36.481Z">
+<meta property="og:image" content="http://ou9i51fe5.bkt.clouddn.com/coreos.png">
+<meta property="og:updated_time" content="2017-08-17T07:48:34.184Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Markdown介绍">
-<meta name="twitter:description" content="Markdown 语法简单，记忆负担小，纯文本，流畅书写，无违和感，各种实时渲染效果,所以被刚广泛使用">
+<meta name="twitter:title" content="thk_days">
+<meta name="twitter:description" content="CoreOS是一个基于Linux 内核的轻量级操作系统，为了计算机集群的基础设施建设而生，专注于自动化，轻松部署，安全，可靠，规模化。作为一个操作系统，CoreOS 提供了在应用容器内部署应用所需要的基础功能环境以及一系列用于服务发现和配置共享的内建工具。">
+<meta name="twitter:image" content="http://ou9i51fe5.bkt.clouddn.com/coreos.png">
 
 
 
@@ -132,13 +133,13 @@
 
 
 
-  <link rel="canonical" href="http://qhzxc0015.com/2017/07/20/md介绍.html"/>
+  <link rel="canonical" href="http://qhzxc0015.com/2017/08/17/05. coreos搭建.html"/>
 
 
 
 
 
-  <title>Markdown介绍 | thk_days</title>
+  <title> | thk_days</title>
   
 
 
@@ -305,7 +306,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://qhzxc0015.com/2017/07/20/md介绍.html">
+    <link itemprop="mainEntityOfPage" href="http://qhzxc0015.com/2017/08/17/05. coreos搭建.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zxc">
@@ -322,7 +323,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Markdown介绍</h1>
+          <h1 class="post-title" itemprop="name headline"></h1>
         
 
         <div class="post-meta">
@@ -334,8 +335,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-20T21:55:06+08:00">
-                2017-07-20
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-17T15:47:11+08:00">
+                2017-08-17
               </time>
             
 
@@ -361,7 +362,7 @@
              <i class="fa fa-bar-chart"></i>
            </span>
            <span class="post-meta-item-text">WordCount:</span>
-           <span class="post-count">514 (字)</span>
+           <span class="post-count">192 (字)</span>
            
          </span>
     
@@ -371,7 +372,7 @@
              <i class="fa fa-coffee"></i>
            </span>
            <span class="post-meta-item-text">Readtime:</span>
-           <span class="post-count">2 (min)</span>
+           <span class="post-count">1 (min)</span>
            
          </span>
 		  
@@ -396,53 +397,24 @@
       
 
       
-        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>Markdown 语法简单，记忆负担小，纯文本，流畅书写，无违和感，各种<strong>实时</strong>渲染效果,所以被刚广泛使用<a id="more"></a></p>
-<blockquote>
-<p> <strong>优点</strong><br>    语法简单，记忆负担小，纯文本，流畅书写，无违和感，各种<strong>实时</strong>渲染效果。</p>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
+<p>CoreOS是一个基于Linux 内核的轻量级操作系统，为了计算机集群的基础设施建设而生，专注于自动化，轻松部署，安全，可靠，规模化。作为一个操作系统，CoreOS 提供了在应用容器内部署应用所需要的基础功能环境以及一系列用于服务发现和配置共享的内建工具。</p>
 </blockquote>
+<p><img src="http://ou9i51fe5.bkt.clouddn.com/coreos.png" alt=""><br><a id="more"></a></p>
+<p>参考文献：</p>
 <ol>
-<li><code>markdown</code>是为那些需要经常码东西并且进行文字排版的、对码字手速和排版顺畅度有要求的人群设计的，他们希望用键盘把文字内容啪啪啪地打出来后就已经排版好了，最好从头到尾都不要使用鼠标。这些人包括经常需要写文档的<strong>码农</strong>、博客写手、网站小编、出版业人士等等。</li>
-<li>通常情况下，网络上需要进行大量文字输入的地方都可以通过<strong>所见即所得</strong>的方式排版</li>
-<li>再强调一下实时的渲染效果。无论新手老手写 Markdown 的时候最担心的是不知道自己写的对不对，最后渲染效果是不是准确无误。就好象写完代码你一定要自己测试一下才放心，写 Markdown 就是在写代码，实时的渲染效果就是在做测试，这就是为什么网络上有那么多左右两屏带实时渲染的 Markdown 工具的原因（另一个原因是宽屏）<sup id="fnref:1"><a href="#fn:1" rel="footnote"><span class="hint--top-right hint--error hint--large" aria-label="这个是脚注"><a href="http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference" target="_blank" rel="external">1</a></span></a></sup></li>
-<li>公式,[^LaTeX]: 支持 <strong>LaTeX</strong> 编辑显示支持，例如：$\sum_{i=1}^n a_i=0$， 访问 <a href="http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference" target="_blank" rel="external">MathJax</a></li>
+<li><a href="https://blog.smdcn.net/article/1308.html" target="_blank" rel="external">使用Vagrant在Windows下部署开发环境</a></li>
 </ol>
-<hr>
-<p>$$    x = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a} $$</p>
-<hr>
-<p>$$<br>\Gamma(z) = \int_0^\infty t^{z-1}e^{-t}dt\,.<br>$$</p>
-<hr>
-<p>$$<br>        \begin{matrix}<br>        1 &amp; x &amp; x^2 \<br>        1 &amp; y &amp; y^2 \<br>        1 &amp; z &amp; z^2 \<br>        \end{matrix}<br>$$</p>
-<hr>
-<p>$$ \left[<br>    \begin{array}{cc|c}<br>      1&amp;2&amp;3\<br>      4&amp;5&amp;6<br>    \end{array}<br>\right] $$</p>
-<hr>
-<p>\begin{align}<br>\sqrt{37} &amp; = \sqrt{\frac{73^2-1}{12^2}} \<br> &amp; = \sqrt{\frac{73^2}{12^2}\cdot\frac{73^2-1}{73^2}} \<br> &amp; = \sqrt{\frac{73^2}{12^2}}\sqrt{\frac{73^2-1}{73^2}} \<br> &amp; = \frac{73}{12}\sqrt{1 - \frac{1}{73^2}} \<br> &amp; \approx \frac{73}{12}\left(1 - \frac{1}{2\cdot73^2}\right)<br>\end{align}</p>
-<p>$ \newcommand{\SES}[3]{ 0 \to #1 \to #2 \to #3 \to 0 } $</p>
-<ol>
-<li>表格<br>| 1    |    2 |  3   | 4    |<br>| —- | —: | :–: | —- |<br>| 1    |    1 |  1   | <em>1</em>  |</li>
-</ol>
-<table>
-<thead>
-<tr>
-<th>Item</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Computer</td>
-<td>\$1600</td>
-</tr>
-<tr>
-<td>Phone</td>
-<td>\$12</td>
-</tr>
-<tr>
-<td>Pipe</td>
-<td>\$1</td>
-</tr>
-</tbody>
-</table>
-<div id="footnotes"><hr><div id="footnotelist"><ol style="list-style: none; padding-left: 0; margin-left: 40px"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">1.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">这个是脚注<a href="#fnref:1" rev="footnote"> ↩</a></span></li></ol></div></div>
+<p>准备工作：</p>
+<ul>
+<li>下载安装<a href="https://www.virtualbox.org/" target="_blank" rel="external">VirtualBox</a></li>
+<li>下载安装<a href="http://www.vagrantup.com/" target="_blank" rel="external">Vagrant</a></li>
+<li>git获取<em>Vagrantfile</em>：<code>git clone https://github.com/coreos/coreos-vagrant.git</code></li>
+</ul>
+<p>下载完毕后进入<em>coreos-vagrant</em>文件夹，将<code>config.rb.sample</code>和<code>user-data.sample</code>的sample去掉，修改<code>config.rb</code>中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$num_instances=1 </div><div class="line">$update_channel=&apos;alpha&apos;</div></pre></td></tr></table></figure>
+<p>操作：<br> 启动：<code>vagrant up</code><br> 状态：<code>vagrant status</code><br> 进入：<code>vagrant ssh core-01</code></p>
+
       
     </div>
 
@@ -470,12 +442,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/技术/" rel="tag"># 技术</a>
-          
-        </div>
-      
 
       
       
@@ -485,8 +451,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/19/hexo.html" rel="next" title="hexo基本配置">
-                <i class="fa fa-chevron-left"></i> hexo基本配置
+              <a href="/2017/08/17/04. k8s设计方案.html" rel="next" title="k8s设计方案">
+                <i class="fa fa-chevron-left"></i> k8s设计方案
               </a>
             
           </div>
@@ -494,10 +460,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/07/27/k8s 1.5.2.html" rel="prev" title="Kubernetes 部署">
-                Kubernetes 部署 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -561,7 +523,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
