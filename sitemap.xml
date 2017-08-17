@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://qhzxc0015.com/2017/07/27/03.%20k8s%201.5.2.html</loc>
+    
+    <lastmod>2017-08-17T07:52:11.459Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://qhzxc0015.com/2017/08/17/05.%20coreos%E6%90%AD%E5%BB%BA.html</loc>
     
     <lastmod>2017-08-17T07:48:34.184Z</lastmod>
@@ -54,13 +61,6 @@
     <loc>http://qhzxc0015.com/categories/index.html</loc>
     
     <lastmod>2017-08-06T21:52:18.927Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://qhzxc0015.com/2017/07/27/03.%20k8s%201.5.2.html</loc>
-    
-    <lastmod>2017-07-27T07:37:14.056Z</lastmod>
     
   </url>
   
