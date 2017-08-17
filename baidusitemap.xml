@@ -4,14 +4,31 @@
 
     
   <url>
+    <loc>http://qhzxc0015.com/2017/08/17/05.%20coreos%E6%90%AD%E5%BB%BA.html</loc>
+    <lastmod>2017-08-17T08:32:54.141Z</lastmod>
+    <data>
+        <display>
+        <title>CoreOS</title>
+        <pubTime>2017-08-17T08:32:31.000Z</pubTime>
+        
+        <tag>CoreOS docker</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://qhzxc0015.com/2017/08/17/06.%20Registry%E6%90%AD%E5%BB%BA.html</loc>
-    <lastmod>2017-08-17T08:27:54.673Z</lastmod>
+    <lastmod>2017-08-17T08:30:03.158Z</lastmod>
     <data>
         <display>
         <title>Docker Registry</title>
         <pubTime>2017-08-17T08:22:58.000Z</pubTime>
         
-        <tag>Docker, Harbor</tag>
+        <tag>Docker Harbor</tag>
          
          
            
@@ -30,21 +47,6 @@
         
         <tag>技术</tag>
          
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://qhzxc0015.com/2017/08/17/05.%20coreos%E6%90%AD%E5%BB%BA.html</loc>
-    <lastmod>2017-08-17T07:48:34.184Z</lastmod>
-    <data>
-        <display>
-        <title></title>
-        <pubTime>2017-08-17T07:47:11.949Z</pubTime>
-        
          
            
         </display>
