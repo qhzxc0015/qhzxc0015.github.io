@@ -4,6 +4,23 @@
 
     
   <url>
+    <loc>http://qhzxc0015.com/2017/07/27/03.%20k8s%201.5.2.html</loc>
+    <lastmod>2017-09-09T03:20:48.225Z</lastmod>
+    <data>
+        <display>
+        <title>Kubernetes 部署</title>
+        <pubTime>2017-07-27T07:19:06.000Z</pubTime>
+        
+        <tag>技术</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://qhzxc0015.com/2017/08/15/07.%20kubeDNS.html</loc>
     <lastmod>2017-08-29T08:34:00.271Z</lastmod>
     <data>
@@ -48,23 +65,6 @@
         <pubTime>2017-08-17T08:32:31.000Z</pubTime>
         
         <tag>CoreOS docker</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://qhzxc0015.com/2017/07/27/03.%20k8s%201.5.2.html</loc>
-    <lastmod>2017-08-17T07:52:11.459Z</lastmod>
-    <data>
-        <display>
-        <title>Kubernetes 部署</title>
-        <pubTime>2017-07-27T07:19:06.000Z</pubTime>
-        
-        <tag>技术</tag>
          
          
            

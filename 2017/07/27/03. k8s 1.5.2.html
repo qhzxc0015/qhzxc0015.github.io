@@ -101,7 +101,7 @@
 <meta property="og:site_name" content="thk_days">
 <meta property="og:description" content="本部署方法通过yum来进行自动安装,k8s版本并不是最新版,此方法简单,高效,操作性强,非常好">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-08-17T07:52:11.459Z">
+<meta property="og:updated_time" content="2017-09-09T03:20:48.225Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kubernetes 部署">
 <meta name="twitter:description" content="本部署方法通过yum来进行自动安装,k8s版本并不是最新版,此方法简单,高效,操作性强,非常好">
@@ -361,7 +361,7 @@
              <i class="fa fa-bar-chart"></i>
            </span>
            <span class="post-meta-item-text">WordCount:</span>
-           <span class="post-count">951 (字)</span>
+           <span class="post-count">1,018 (字)</span>
            
          </span>
     
@@ -371,7 +371,7 @@
              <i class="fa fa-coffee"></i>
            </span>
            <span class="post-meta-item-text">Readtime:</span>
-           <span class="post-count">5 (min)</span>
+           <span class="post-count">6 (min)</span>
            
          </span>
 		  
@@ -460,7 +460,7 @@
 <p>2.修改<em>/etc/kubernetes/kubelet</em> (注意修改每个node的IP)</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">###</div><div class="line"># kubernetes kubelet (minion) config</div><div class="line"></div><div class="line"># The address for the info server to serve on (set to 0.0.0.0 or &quot;&quot; for all interfaces)</div><div class="line">KUBELET_ADDRESS=&quot;--address=127.0.0.1&quot;</div><div class="line"></div><div class="line"># The port for the info server to serve on</div><div class="line"># KUBELET_PORT=&quot;--port=10250&quot;</div><div class="line"></div><div class="line"># You may leave this blank to use the actual hostname</div><div class="line">KUBELET_HOSTNAME=&quot;--hostname-override=202.193.75.11&quot;</div><div class="line"></div><div class="line"># location of the api-server</div><div class="line">KUBELET_API_SERVER=&quot;--api-servers=http://202.193.74.179:8080&quot;</div><div class="line"></div><div class="line"># pod infrastructure container</div><div class="line">KUBELET_POD_INFRA_CONTAINER=&quot;--pod-infra-container-image=registry.access.redhat.com/rhel7/pod-infrastructure:latest&quot;</div><div class="line"></div><div class="line"># Add your own!</div><div class="line">KUBELET_ARGS=&quot;--pod-infra-container-image=kubernetes/pause&quot;</div></pre></td></tr></table></figure>
 <p>3.修改<em>/etc/sysconfig/flanneld</em> </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"># Flanneld configuration options  </div><div class="line"></div><div class="line"># etcd url location.  Point this to the server where etcd runs</div><div class="line">FLANNEL_ETCD_ENDPOINTS=&quot;http://202.193.74.179:2379&quot;</div><div class="line"></div><div class="line"># etcd config key.  This is the configuration key that flannel queries</div><div class="line"># For address range assignment</div><div class="line">#FLANNEL_ETCD_PREFIX=&quot;/atomic.io/network&quot;</div><div class="line">FLANNEL_ETCD_PREFIX=&quot;/coreos.com/network&quot;</div><div class="line"></div><div class="line"># Any additional options that you want to pass</div><div class="line">FLANNEL_OPTIONS=&quot; -iface=eth33&quot;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"># Flanneld configuration options  </div><div class="line"></div><div class="line"># etcd url location.  Point this to the server where etcd runs</div><div class="line">FLANNEL_ETCD_ENDPOINTS=&quot;http://202.193.74.179:2379&quot;</div><div class="line"></div><div class="line"># etcd config key.  This is the configuration key that flannel queries</div><div class="line"># For address range assignment</div><div class="line">#FLANNEL_ETCD_PREFIX=&quot;/atomic.io/network&quot;</div><div class="line">FLANNEL_ETCD_PREFIX=&quot;/coreos.com/network&quot;</div><div class="line"></div><div class="line"># Any additional options that you want to pass</div><div class="line">FLANNEL_OPTIONS=&quot; -iface=ens33&quot;</div></pre></td></tr></table></figure>
 <p>其中<code>FLANNEL_OPTIONS=&quot; -iface=eth0&quot;</code>的eth0是网卡名称</p>
 <ul>
 <li>启动服务<br><code>sudo systemctl restart flanneld docker</code><br><code>sudo systemctl start kubelet kube-proxy</code><br><code>sudo systemctl enable flanneld kubelet kube-proxy</code></li>
@@ -469,6 +469,15 @@
 <h2 id="4-附录"><a href="#4-附录" class="headerlink" title="4. 附录"></a>4. 附录</h2><p><strong>Error 1</strong>:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[centos@179 message_board]$ kubectl get pods</div><div class="line">No resources found.</div></pre></td></tr></table></figure>
 <p>解决方法:<br><a href="http://blog.csdn.net/jinzhencs/article/details/51435020" target="_blank" rel="external">参考链接</a>,认证问题,可以跳过认证方法:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">#vim /etc/kubernetes/apiserver</div><div class="line">KUBE_ADMISSION_CONTROL=&quot;--admission_control=NamespaceLifecycle,NamespaceExists,LimitRanger,ResourceQuota&quot;</div></pre></td></tr></table></figure></p>
+<h2 id="5-添加节点"><a href="#5-添加节点" class="headerlink" title="5. 添加节点"></a>5. 添加节点</h2><p>master不变，node修改：</p>
+<ol>
+<li><code>2.修改*/etc/kubernetes/kubelet* (注意修改每个node的IP)</code>IP地址</li>
+<li><code>3.修改*/etc/sysconfig/flanneld*</code>网卡修改</li>
+<li><p>重启服务，- 启动服务<br><code>sudo systemctl restart flanneld docker</code></p>
+<p><code>sudo systemctl start kubelet kube-proxy</code></p>
+<p><code>sudo systemctl enable flanneld kubelet kube-proxy</code></p>
+</li>
+</ol>
 
       
     </div>
@@ -645,7 +654,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-前期工作"><span class="nav-number">1.</span> <span class="nav-text">1. 前期工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-部署环境"><span class="nav-number">2.</span> <span class="nav-text">2. 部署环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Master"><span class="nav-number">2.1.</span> <span class="nav-text">Master</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Node-minions"><span class="nav-number">2.2.</span> <span class="nav-text">Node(minions)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-验证"><span class="nav-number">3.</span> <span class="nav-text">3. 验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-附录"><span class="nav-number">4.</span> <span class="nav-text">4. 附录</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-前期工作"><span class="nav-number">1.</span> <span class="nav-text">1. 前期工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-部署环境"><span class="nav-number">2.</span> <span class="nav-text">2. 部署环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Master"><span class="nav-number">2.1.</span> <span class="nav-text">Master</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Node-minions"><span class="nav-number">2.2.</span> <span class="nav-text">Node(minions)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-验证"><span class="nav-number">3.</span> <span class="nav-text">3. 验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-附录"><span class="nav-number">4.</span> <span class="nav-text">4. 附录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-添加节点"><span class="nav-number">5.</span> <span class="nav-text">5. 添加节点</span></a></li></ol></div>
             
 
           </div>
