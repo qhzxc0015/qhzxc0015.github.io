@@ -4,25 +4,6 @@
 
     
   <url>
-    <loc>http://qhzxc0015.com/2017/10/07/08.%20jd%E9%9D%A2%E7%BB%8F.html</loc>
-    <lastmod>2017-10-07T12:29:04.826Z</lastmod>
-    <data>
-        <display>
-        <title>京东面经</title>
-        <pubTime>2017-10-07T11:54:04.000Z</pubTime>
-        
-        <tag>JD</tag>
-         
-        <tag>面试</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://qhzxc0015.com/2017/08/17/06.%20Registry%E6%90%AD%E5%BB%BA.html</loc>
     <lastmod>2017-09-09T06:52:22.375Z</lastmod>
     <data>
@@ -49,9 +30,9 @@
         <title>CoreOS</title>
         <pubTime>2017-08-17T08:32:31.000Z</pubTime>
         
-        <tag>CoreOS</tag>
-         
         <tag>Docker</tag>
+         
+        <tag>CoreOS</tag>
          
          
            
