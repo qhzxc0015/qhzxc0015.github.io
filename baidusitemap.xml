@@ -3,6 +3,43 @@
 
 
     
+  <url>
+    <loc>http://qhzxc0015.com/2017/12/02/08.k8s%20for%20es.html</loc>
+    <lastmod>2017-12-03T17:16:57.678Z</lastmod>
+    <data>
+        <display>
+        <title>kubernetes for Elasticsearch</title>
+        <pubTime>2017-12-01T22:56:03.000Z</pubTime>
+        
+        <tag>kubernetes Elasticsearch</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://qhzxc0015.com/2017/07/27/03.%20k8s%201.5.2.html</loc>
+    <lastmod>2017-11-29T13:30:13.135Z</lastmod>
+    <data>
+        <display>
+        <title>Kubernetes 部署</title>
+        <pubTime>2017-07-27T07:19:06.000Z</pubTime>
+        
+        <tag>技术</tag>
+         
+        <tag>k8s</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+    
     
   <url>
     <loc>http://qhzxc0015.com/2017/08/17/06.%20Registry%E6%90%AD%E5%BB%BA.html</loc>
@@ -34,25 +71,6 @@
         <tag>CoreOS</tag>
          
         <tag>Docker</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://qhzxc0015.com/2017/07/27/03.%20k8s%201.5.2.html</loc>
-    <lastmod>2017-09-09T06:51:30.487Z</lastmod>
-    <data>
-        <display>
-        <title>Kubernetes 部署</title>
-        <pubTime>2017-07-27T07:19:06.000Z</pubTime>
-        
-        <tag>技术</tag>
-         
-        <tag>k8s</tag>
          
          
            
@@ -100,23 +118,6 @@
 
     
   <url>
-    <loc>http://qhzxc0015.com/2017/08/17/04.%20k8s%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%A1%88.html</loc>
-    <lastmod>2017-08-17T07:34:15.590Z</lastmod>
-    <data>
-        <display>
-        <title>k8s设计方案</title>
-        <pubTime>2017-08-16T19:23:24.000Z</pubTime>
-        
-        <tag>kubernetes</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://qhzxc0015.com/2017/07/19/01.%20hexo.html</loc>
     <lastmod>2017-08-09T08:56:16.305Z</lastmod>
     <data>
@@ -132,7 +133,6 @@
     </data>
     </url>
 
-    
     
     
     
