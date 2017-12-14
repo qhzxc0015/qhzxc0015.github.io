@@ -4,6 +4,25 @@
 
     
   <url>
+    <loc>http://qhzxc0015.com/2017/08/17/06.%20Registry%E6%90%AD%E5%BB%BA.html</loc>
+    <lastmod>2017-12-14T17:13:54.283Z</lastmod>
+    <data>
+        <display>
+        <title>Docker Registry</title>
+        <pubTime>2017-08-17T08:22:58.000Z</pubTime>
+        
+        <tag>Docker</tag>
+         
+        <tag>Harbor</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://qhzxc0015.com/2017/12/02/08.k8s%20for%20es.html</loc>
     <lastmod>2017-12-10T06:03:57.325Z</lastmod>
     <data>
@@ -28,30 +47,9 @@
         <title>Kubernetes 部署</title>
         <pubTime>2017-07-27T07:19:06.000Z</pubTime>
         
-        <tag>技术</tag>
-         
         <tag>k8s</tag>
          
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-    
-    
-  <url>
-    <loc>http://qhzxc0015.com/2017/08/17/06.%20Registry%E6%90%AD%E5%BB%BA.html</loc>
-    <lastmod>2017-09-09T06:52:22.375Z</lastmod>
-    <data>
-        <display>
-        <title>Docker Registry</title>
-        <pubTime>2017-08-17T08:22:58.000Z</pubTime>
-        
-        <tag>Docker</tag>
-         
-        <tag>Harbor</tag>
+        <tag>技术</tag>
          
          
            
@@ -59,6 +57,8 @@
     </data>
     </url>
 
+    
+    
     
   <url>
     <loc>http://qhzxc0015.com/2017/08/17/05.%20coreos%E6%90%AD%E5%BB%BA.html</loc>
@@ -68,9 +68,9 @@
         <title>CoreOS</title>
         <pubTime>2017-08-17T08:32:31.000Z</pubTime>
         
-        <tag>CoreOS</tag>
-         
         <tag>Docker</tag>
+         
+        <tag>CoreOS</tag>
          
          
            
