@@ -5,7 +5,7 @@
     
   <url>
     <loc>http://qhzxc0015.com/2017/08/17/06.%20Registry%E6%90%AD%E5%BB%BA.html</loc>
-    <lastmod>2017-12-14T17:13:54.283Z</lastmod>
+    <lastmod>2017-12-14T17:17:54.056Z</lastmod>
     <data>
         <display>
         <title>Docker Registry</title>
@@ -47,9 +47,9 @@
         <title>Kubernetes 部署</title>
         <pubTime>2017-07-27T07:19:06.000Z</pubTime>
         
-        <tag>k8s</tag>
-         
         <tag>技术</tag>
+         
+        <tag>k8s</tag>
          
          
            
@@ -68,9 +68,9 @@
         <title>CoreOS</title>
         <pubTime>2017-08-17T08:32:31.000Z</pubTime>
         
-        <tag>Docker</tag>
-         
         <tag>CoreOS</tag>
+         
+        <tag>Docker</tag>
          
          
            
