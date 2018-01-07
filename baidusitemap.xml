@@ -4,6 +4,23 @@
 
     
   <url>
+    <loc>http://qhzxc0015.com/2018/01/07/09.%20kubeadm-1.8.1.html</loc>
+    <lastmod>2018-01-07T15:58:16.231Z</lastmod>
+    <data>
+        <display>
+        <title>kubeadm 1.8.1</title>
+        <pubTime>2018-01-07T15:57:59.000Z</pubTime>
+        
+        <tag>kubernetes kubeadm</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://qhzxc0015.com/2017/12/02/08.k8s%20for%20es.html</loc>
     <lastmod>2017-12-14T17:28:44.917Z</lastmod>
     <data>
@@ -70,9 +87,9 @@
         <title>CoreOS</title>
         <pubTime>2017-08-17T08:32:31.000Z</pubTime>
         
-        <tag>Docker</tag>
-         
         <tag>CoreOS</tag>
+         
+        <tag>Docker</tag>
          
          
            

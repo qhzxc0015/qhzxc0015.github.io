@@ -18,7 +18,7 @@
 
   <!--Open Graph Title-->
   
-      <meta property="og:title" content="guestbook"/>
+      <meta property="og:title" content="kubeadm 1.8.1"/>
   
   <!--Open Graph Description-->
   
@@ -46,7 +46,7 @@
     </script>
   <!-- Title -->
   
-  <title>guestbook - thk_days</title>
+  <title>kubeadm 1.8.1 - thk_days</title>
 
 
   <link rel="shortcut icon" href="/favicon.ico">
@@ -147,22 +147,61 @@
         <!-- Title date & tags -->
         <div class="post-header">
           <h1 class="entry-title">
-            guestbook
+            kubeadm 1.8.1
             
           </h1>
          
         </div>
          <p class="a-posted-on">
-          2017-08-07
+          2018-01-07
           </p>
         <!-- Post Main Content -->
         <div class="entry-content">
-          <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><div class="ds-recent-visitors" data-num-items="28" data-avatar-size="42" id="ds-recent-visitors"></div>
+          <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
+<p>kubeadm</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="1-准备工作"><a href="#1-准备工作" class="headerlink" title="1.准备工作"></a>1.准备工作</h2><ul>
+<li>关闭防火墙<br>查看状态：<code>firewall-cmd --state</code><br>临时关闭：<code>sudo systemctl stop firewall</code><br>关自启动：<code>sudo systemctl disable firewalld.service</code></li>
+<li>关闭swap<br>查看状态：<code>free</code><br>临时关闭：<code>sudo swapoff -a</code><br>永久关闭：在<em>/etc/sysctl.conf</em>文件里添加如下参数：<code>vm.swappiness=10</code></li>
+<li>关闭SELinux<br>查看SELinux状态：<code>/usr/sbin/sestatus -v</code><br>临时关闭（不用重启机器）：<code>setenforce 0</code><br>2、修改配置文件需要重启机器：<br>修改<em>/etc/selinux/config</em> 文件<br><code>将SELINUX=enforcing改为SELINUX=disabled</code></li>
+<li>时间同步ntp<br><code>sudo yum install -y ntpdate</code><br><code>sudo ntpdate -u ntp.api.bz</code><br><code>sudo systemctl enable ntpd.service</code><br><code>sudo systemctl status ntpd.service</code><br>其中<em>/etc/ntp.conf</em>可以添加NTP服务器，比如：<br><code>161.3.16.172.in-addr.arpa</code></li>
+<li>安装docker<br><code>sudo yum install -y docker</code><br><code>sudo systemctl enable docker &amp;&amp; sudo systemctl start docker</code><br>如果不做这四个准备工作会遇到各种奇怪的问题：</li>
+</ul>
+<ol>
+<li>防火墙不关，pod会<code>no route to host</code></li>
+<li>swap不关，重启<code>kube服务</code>会不加载</li>
+<li>SELinux不关，<code>kubeadm init</code>失败</li>
+<li>ntp时间不同步，node加载后<code>notready</code></li>
+</ol>
+
         </div>
       </article>
     </div>
     <!-- Pre or Next -->
     
+	<div class="container" >
+           <ul class="pager">
+    	     
+           
+              <li class="next">
+              <a href="/2017/12/02/08.k8s for es.html" rel="prev">上一篇</a>
+            </li>
+           
+          </ul>
+       </div>
+　　　　<!-- Comments -->
+    <div class="container">
+      
+<section id="comment">
+  <!-- <h1 class="title">Comments</h1> -->
+
+  
+</section>
+
+
+    </div>
+   
 　　　　
   </div>
 </div>
