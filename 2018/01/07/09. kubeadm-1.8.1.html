@@ -158,7 +158,7 @@
         <!-- Post Main Content -->
         <div class="entry-content">
           <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
-<p>kubeadm</p>
+<p>Kubeadm is a tool built to provide <code>kubeadm init</code> and <code>kubeadm join</code> as best-practice “fast paths” for creating Kubernetes clusters.<br><img src="http://ou9i51fe5.bkt.clouddn.com/kubeadm.jpg" alt=""></p>
 </blockquote>
 <a id="more"></a>
 <h2 id="1-准备工作"><a href="#1-准备工作" class="headerlink" title="1.准备工作"></a>1.准备工作</h2><ul>
@@ -174,6 +174,25 @@
 <li>SELinux不关，<code>kubeadm init</code>失败</li>
 <li>ntp时间不同步，node加载后<code>notready</code></li>
 </ol>
+<hr>
+<h2 id="2-安装"><a href="#2-安装" class="headerlink" title="2. 安装"></a>2. 安装</h2><ul>
+<li><p>master节点执行root用户<code>sh init-master.sh</code></p>
+<blockquote>
+<p>由于安全原因，默认情况下pod不会被schedule到master节点上，可以通过下面命令解除这种限制：<br><code>kubectl taint nodes --all node-role.kubernetes.io/master-</code></p>
+</blockquote>
+</li>
+<li><p>在master安装dashboard，这样dashboard不会调用到node上<br>执行<code>sh init-dashboard.sh</code><br>把<code>type:ClusterIP</code>改成<code>NodePort</code>然后访问dashboard所在节点+端口号即可。</p>
+</li>
+<li>node节点执行<code>init-node.sh</code>再执行master输出的<code>kubeadm join</code>命令</li>
+</ul>
+<hr>
+<h2 id="3-常见问题"><a href="#3-常见问题" class="headerlink" title="3 常见问题"></a>3 常见问题</h2><ul>
+<li><p>重新安装<br><code>kubeadm reset</code><br><code>kubeadm init --pod-network-cidr=192.168.0.0/16 --kubernetes-version v1.8.1</code><br>初始化完成后需要执行命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">非root：</div><div class="line">mkdir -p $HOME/.kube</div><div class="line">sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config</div><div class="line">sudo chown $(id -u):$(id -g) $HOME/.kube/config</div><div class="line">root:</div><div class="line">export KUBECONFIG=/etc/kubernetes/admin.conf</div></pre></td></tr></table></figure>
+</li>
+<li><p>dial tcp [::1]:10255: getsockopt: connection refused.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">[kubelet-check] It seems like the kubelet isn&apos;t running or healthy.</div><div class="line">[kubelet-check] The HTTP call equal to &apos;curl -sSL http://localhost:10255/healthz&apos; failed with error: Get http://localhost:10255/healthz: dial tcp [::1]:10255: getsockopt: connection refused.</div><div class="line">Unfortunately, an error has occurred:</div><div class="line">        timed out waiting for the condition</div><div class="line">This error is likely caused by that:</div><div class="line">        - The kubelet is not running</div><div class="line">        - The kubelet is unhealthy due to a misconfiguration of the node in some way (required cgroups disabled)</div><div class="line">        - There is no internet connection; so the kubelet can&apos;t pull the following control plane images:</div><div class="line">                - gcr.io/google_containers/kube-apiserver-amd64:v1.8.1</div><div class="line">                - gcr.io/google_containers/kube-controller-manager-amd64:v1.8.1</div><div class="line">                - gcr.io/google_containers/kube-scheduler-amd64:v1.8.1</div><div class="line">You can troubleshoot this for example with the following commands if you&apos;re on a systemd-powered system:</div><div class="line">        - &apos;systemctl status kubelet&apos;</div><div class="line">        - &apos;journalctl -xeu kubelet&apos;</div><div class="line">couldn&apos;t initialize a Kubernetes cluster</div></pre></td></tr></table></figure></li>
+</ul>
 
         </div>
       </article>
