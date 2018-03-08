@@ -4,14 +4,14 @@
 
     
   <url>
-    <loc>http://qhzxc0015.com/2018/01/30/11.%20scheduler.html</loc>
-    <lastmod>2018-01-29T21:00:07.739Z</lastmod>
+    <loc>http://qhzxc0015.com/2018/01/22/10.%20k8s%E6%8F%92%E7%94%BB.html</loc>
+    <lastmod>2018-03-08T13:06:11.703Z</lastmod>
     <data>
         <display>
-        <title>Scheduler</title>
-        <pubTime>2018-01-29T20:50:15.000Z</pubTime>
+        <title>插画版Kubernetes指南</title>
+        <pubTime>2018-01-21T18:24:13.000Z</pubTime>
         
-        <tag>k8s scheduler</tag>
+        <tag>k8s</tag>
          
          
            
@@ -21,14 +21,14 @@
 
     
   <url>
-    <loc>http://qhzxc0015.com/2018/01/22/10.%20k8s%E6%8F%92%E7%94%BB.html</loc>
-    <lastmod>2018-01-21T18:33:50.448Z</lastmod>
+    <loc>http://qhzxc0015.com/2018/01/30/11.%20scheduler.html</loc>
+    <lastmod>2018-01-29T21:00:07.739Z</lastmod>
     <data>
         <display>
-        <title>插画版Kubernetes指南</title>
-        <pubTime>2018-01-21T18:24:13.000Z</pubTime>
+        <title>Scheduler</title>
+        <pubTime>2018-01-29T20:50:15.000Z</pubTime>
         
-        <tag>k8s</tag>
+        <tag>k8s scheduler</tag>
          
          
            
@@ -121,9 +121,9 @@
         <title>CoreOS</title>
         <pubTime>2017-08-17T08:32:31.000Z</pubTime>
         
-        <tag>Docker</tag>
-         
         <tag>CoreOS</tag>
+         
+        <tag>Docker</tag>
          
          
            
